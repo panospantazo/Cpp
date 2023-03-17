@@ -1,0 +1,2 @@
+
+        cout << "Give integer a: ";
