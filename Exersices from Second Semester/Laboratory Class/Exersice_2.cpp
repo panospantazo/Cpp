@@ -8,8 +8,10 @@ class foititis
 {
     public:
         foititis();
-        foititis(int);
-        foititis(const foititis &in_foit);
+        foititis(char*,string);
+        foititis(char*,string,int);
+        foititis(const foititis &);
+        
         ~foititis();
         
         unsigned int get_foititi_semester();
@@ -22,6 +24,10 @@ class foititis
     
         void print();
         void change_semester(bool);
+        void operator+=(const int);
+        void operator-=(const int);
+        void operator++ (const int b);
+
     private:
         char *AM;
         string name;
@@ -30,42 +36,103 @@ class foititis
 
 int main(void)
 {
-    foititis mpotis;
-    bool a = true;
+    char* help_arr;
     string answer;
-    
-    cout << "Wanna increase or decrease semester?";
-    cin >> answer;
-    if(answer == "increase")
+    int s;
+    help_arr = new char [size]{'2','2','3','9','0','1','7','4'};
+    if(!help_arr)
     {
-        mpotis.change_semester(a);
+        cout << "Error Allocating Memory" << endl;
+        exit(1312);
+    }
+    foititis panagiotis(help_arr,"Panagiotis Pantazopoulos");
+    panagiotis.print();
+    
+    
+    foititis xarhs;
+    xarhs = panagiotis;
+    delete [] help_arr;
+
+    help_arr = new char [size]{'2','2','3','9','0','0','5','2'};    
+    if(!help_arr)
+    {
+        cout << "Error Allocating Memory" << endl;
+        exit(1312);
+    }
+    
+    xarhs.set_foititi_AM(help_arr);
+    delete [] help_arr;
+    xarhs.set_foititi_name("Xarhs Kotsidopoulos");
+    xarhs.set_foititi_semester(2);
+    xarhs.print();
+
+    cout << "End of Exams" << endl;
+    panagiotis++;
+    xarhs++;
+
+    panagiotis.print();
+    xarhs.print();
+
+    cout << "Who wants to change his semester? Panagiotis/Xarhs" << endl;
+    cin >> answer;
+    cout<< "Press 1 for increase" << endl << "Press 2 for decrease" << endl;
+    cin >> s;
+    
+    if(answer == "Panagiotis" && s == 1)
+    {
+        panagiotis+=1;
+        panagiotis.print();
+    }
+    else if(answer == "Panagiotis" && s == 2)
+    {
+        panagiotis-=1;
+        panagiotis.print();
+    }
+    else if(answer == "Xarhs" && s == 1)
+    {
+        xarhs+=1;
+        xarhs.print();
     }
     else
     {
-        a = false;
-        mpotis.change_semester(a);
+        xarhs -=1; 
+        xarhs.print();
     }
-    mpotis.print();
 
     return 0;
 }
 
 foititis::foititis()
 {
-    AM = new char[size]{'2','2','3','9','0','1','7','4'};
+    AM = NULL;
+    semester = 0;
+    name = "";
+}
+
+foititis::foititis(char *in_AM,string in_name)
+{
+    AM = new char[size];
     if(!AM)
     {
         cout << "Error Allocating Memory" << endl;
         exit(1312);
     }
-    name = "Pantazopoulos Panagiotis";
+    strcpy(AM,in_AM);
+    name = in_name;
     semester = 1;    
 }
 
-foititis::foititis(int in_semester)
+foititis::foititis(char *in_AM,string name,int in_semester)
 {
-    AM = new char[size]{'2','2','3','9','0','1','7','4'};
+    AM = new char[strlen(AM)];
+    if(!AM)
+    {
+        cout << "Error Allocating Memory" << endl;
+        exit(1312);
+    }
+    strcpy(AM,in_AM);
     name = "Pantazopoulos Panagiotis";
+    semester = in_semester;
 }
 
 foititis::foititis(const foititis &in_foit)
@@ -85,9 +152,9 @@ string foititis::get_foititi_name()
     return name;
 }
 
-char*  foititis::get_foititi_AM()
+char* foititis::get_foititi_AM()
 {
-    return &AM[0];
+    return AM;
 }
 
 foititis::~foititis()
@@ -112,8 +179,9 @@ void foititis::set_foititi_AM(char * in_AM)
 
 void foititis::print()
 {
-    //cout << "Name: " << name << endl << "AM: " << AM << endl << "Semester: " << semester << endl;
-    cout << "Semester: " << semester << endl;
+    cout << "-------------------------"<<endl;
+    cout << "Name: " << name << endl << "AM: " << AM << endl << "Semester: " << semester << endl;
+    cout << "-------------------------"<<endl;
 } 
 
 void foititis::change_semester(bool a)
@@ -123,4 +191,19 @@ void foititis::change_semester(bool a)
     else
         semester -= 1;
     
+}
+
+void foititis::operator+=(const int right)
+{
+    semester = semester + right;
+}
+
+void foititis::operator-=(const int right)
+{
+    semester = semester - right;
+}
+
+void foititis::operator++(const int b) 
+{
+    semester = semester + 1;
 }
