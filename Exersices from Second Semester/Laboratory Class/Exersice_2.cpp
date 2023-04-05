@@ -20,7 +20,7 @@ class foititis
         void set_foititi_name(string);
         void set_foititi_AM(char *);
     
-        void print();
+        void print(ostream &);
         void change_semester(bool);
         void operator+=(const int);
         void operator-=(const int);
@@ -44,13 +44,13 @@ int main(void)
     make_help_arr(&help_arr);
 
     foititis panagiotis(help_arr,"Panagiotis Pantazopoulos");
-    panagiotis.print();
+    panagiotis.print(cout);
     
     foititis xarhs(help_arr,"Xarhs Sotiriou",2);
-    xarhs.print();
+    xarhs.print(cout);
 
     foititis nefeli = panagiotis;
-    nefeli.print();
+    nefeli.print(cout);
     
     make_help_arr_3(&help_arr);
     
@@ -58,7 +58,7 @@ int main(void)
     delete [] help_arr;
     nefeli.set_foititi_name("Nefeli Argiropoulou");
     nefeli.set_foititi_semester(5);
-    nefeli.print();
+    nefeli.print(cout);
 
     cout << "End of Exams" << endl;
     cout<< "-------------" << endl;
@@ -68,9 +68,9 @@ int main(void)
 
     cout << "|The tabs of the students after exams|" << endl;
 
-    panagiotis.print();
-    xarhs.print();
-    nefeli.print();
+    panagiotis.print(cout);
+    xarhs.print(cout);
+    nefeli.print(cout);
 
     change_semester(panagiotis,xarhs,nefeli);
     return 0;
@@ -88,32 +88,32 @@ void change_semester(foititis panagiotis,foititis xarhs,foititis nefeli)
     if(answer == "Panagiotis" && s == 1)
     {
         panagiotis+=1;
-        panagiotis.print();
+        panagiotis.print(cout);
     }
     else if(answer == "Panagiotis" && s == 2)
     {
         panagiotis-=1;
-        panagiotis.print();
+        panagiotis.print(cout);
     }
     else if(answer == "Xarhs" && s == 1)
     {
         xarhs+=1;
-        xarhs.print();
+        xarhs.print(cout);
     }
     else if (answer == "Xarhs" && s == 2)
     {
         xarhs -=1; 
-        xarhs.print();
+        xarhs.print(cout);
     }
     else if(answer == "Nefeli" && s == 1)
     {
         nefeli += 1;
-        nefeli.print();
+        nefeli.print(cout);
     }
     else
     {
         nefeli -= 1;
-        nefeli.print();
+        nefeli.print(cout);
     }
 
 }
