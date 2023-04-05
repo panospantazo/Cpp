@@ -8,7 +8,7 @@ class student
         student();
         student(char*,string);
         student(char*,string,int);
-        student(const foititis &);
+        student(const student &);
         
         ~student();
         
@@ -171,11 +171,11 @@ student::student(char *in_AM,string in_name,int in_semester)
     semester = in_semester;
 }
 
-student::student(const foititis &in_foit)
+student::student(const student &in_student)
 {
-    int size = strlen(in_foit.AM + 1);
+    int size = strlen(in_student.AM + 1);
     AM = new char [size];
-    strcpy(AM,in_foit.AM);
+    strcpy(AM,in_student.AM);
     name = in_student.name;
     semester = in_student.semester;
 }
@@ -185,7 +185,7 @@ unsigned int student::get_student_semester()
     return semester;
 }
 
-string foititis::get_student_name()
+string student::get_student_name()
 {
     return name;
 }
