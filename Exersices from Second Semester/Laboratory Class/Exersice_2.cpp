@@ -2,23 +2,23 @@
 #include <cstring>
 using namespace std;
 
-class foititis
+class student
 {
     public:
-        foititis();
-        foititis(char*,string);
-        foititis(char*,string,int);
-        foititis(const foititis &);
+        student();
+        student(char*,string);
+        student(char*,string,int);
+        student(const foititis &);
         
-        ~foititis();
+        ~student();
         
-        unsigned int get_foititi_semester();
-        string get_foititi_name();
-        char* get_foititi_AM();
+        unsigned int get_student_semester();
+        string get_student_name();
+        char* get_student_AM();
 
-        void set_foititi_semester(int);
-        void set_foititi_name(string);
-        void set_foititi_AM(char *);
+        void set_student_semester(int);
+        void set_student_name(string);
+        void set_student_AM(char *);
     
         void print(ostream &);
         void change_semester(bool);
@@ -35,7 +35,7 @@ class foititis
 void make_help_arr(char **);
 void make_help_arr_2(char **);
 void make_help_arr_3(char **);
-void change_semester(foititis, foititis , foititis , ostream &);
+void change_semester(student, student, student , ostream &);
 
 int main(void)
 {
@@ -43,23 +43,23 @@ int main(void)
 
     make_help_arr(&help_arr);
 
-    foititis panagiotis(help_arr,"Panagiotis Pantazopoulos");
+    student panagiotis(help_arr,"Panagiotis Pantazopoulos");
     panagiotis.print(cout);
     
     make_help_arr_2(&help_arr);
     
-    foititis xarhs(help_arr,"Xarhs Sotiriou",2);
+    student xarhs(help_arr,"Xarhs Sotiriou",2);
     xarhs.print(cout);
 
-    foititis nefeli = panagiotis;
+    student nefeli = panagiotis;
     nefeli.print(cout);
     
     make_help_arr_3(&help_arr);
     
-    nefeli.set_foititi_AM(help_arr);
+    nefeli.set_student_AM(help_arr);
     delete [] help_arr;
-    nefeli.set_foititi_name("Nefeli Argiropoulou");
-    nefeli.set_foititi_semester(5);
+    nefeli.set_student_name("Nefeli Argiropoulou");
+    nefeli.set_student_semester(5);
     nefeli.print(cout);
 
     cout << "End of Exams" << endl;
@@ -79,7 +79,7 @@ int main(void)
     return 0;
 }
 
-void change_semester(foititis panagiotis,foititis xarhs,foititis nefeli,ostream &k)
+void change_semester(student panagiotis,student xarhs,student nefeli,ostream &k)
 {
     string answer;
     int s;
@@ -148,14 +148,14 @@ void make_help_arr_3(char **help_arr)
     *help_arr = new char [25]{'2','2','3','9','0','1','3','1'};
 }
 
-foititis::foititis()
+student::student()
 {
     AM = NULL;
     semester = 0;
     name = "";
 }
 
-foititis::foititis(char *in_AM,string in_name)
+student::student(char *in_AM,string in_name)
 {
     AM = new char[strlen(in_AM) + 1];
     strcpy(AM,in_AM);
@@ -163,7 +163,7 @@ foititis::foititis(char *in_AM,string in_name)
     semester = 1;    
 }
 
-foititis::foititis(char *in_AM,string in_name,int in_semester)
+student::student(char *in_AM,string in_name,int in_semester)
 {
     AM = new char[strlen(in_AM) + 1];
     strcpy(AM,in_AM);
@@ -171,58 +171,58 @@ foititis::foititis(char *in_AM,string in_name,int in_semester)
     semester = in_semester;
 }
 
-foititis::foititis(const foititis &in_foit)
+student::student(const foititis &in_foit)
 {
     int size = strlen(in_foit.AM + 1);
     AM = new char [size];
     strcpy(AM,in_foit.AM);
-    name = in_foit.name;
-    semester = in_foit.semester;
+    name = in_student.name;
+    semester = in_student.semester;
 }
 
-unsigned int foititis::get_foititi_semester()
+unsigned int student::get_student_semester()
 {
     return semester;
 }
 
-string foititis::get_foititi_name()
+string foititis::get_student_name()
 {
     return name;
 }
 
-char* foititis::get_foititi_AM()
+char* student::get_student_AM()
 {
     return AM;
 }
 
-foititis::~foititis()
+student::~student()
 {
     delete [] AM;
 }
 
-void foititis::set_foititi_semester(int in_semester)
+void student::set_student_semester(int in_semester)
 {
     semester = in_semester;
 }
 
-void foititis::set_foititi_name(string in_name)
+void student::set_student_name(string in_name)
 {
     name = in_name;
 }
 
-void foititis::set_foititi_AM(char * in_AM)
+void student::set_student_AM(char * in_AM)
 {
     strcpy(AM,in_AM);
 }
 
-void foititis::print(ostream &k)
+void student::print(ostream &k)
 {
     
     k << "|Name: " << name <<"|"<< "AM: " << AM <<"|"<< "Semester: " << semester <<"|"<< endl << endl;
    
 } 
 
-void foititis::change_semester(bool a)
+void student::change_semester(bool a)
 {
     if(a == true)
         semester += 1;
@@ -231,17 +231,17 @@ void foititis::change_semester(bool a)
     
 }
 
-void foititis::operator+=(const int right)
+void student::operator+=(const int right)
 {
     semester = semester + right;
 }
 
-void foititis::operator-=(const int right)
+void student::operator-=(const int right)
 {
     semester = semester - right;
 }
 
-void foititis::operator++(const int b) 
+void student::operator++(const int b) 
 {
     semester = semester + 1;
 }
