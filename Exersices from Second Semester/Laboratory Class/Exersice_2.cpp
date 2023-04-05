@@ -1,7 +1,5 @@
 #include <iostream>
-#include <cstdlib>
 #include <cstring>
-#define size 9
 using namespace std;
 
 class foititis
@@ -34,46 +32,55 @@ class foititis
         unsigned int semester;
 };
 
+void make_help_arr(char **);
+void make_help_arr_2(char **);
+void make_help_arr_3(char **);
+void change_semester(foititis, foititis , foititis);
+
 int main(void)
 {
-    char* help_arr;
-    string answer;
-    int s;
-    help_arr = new char [size]{'2','2','3','9','0','1','7','4'};
-    if(!help_arr)
-    {
-        cout << "Error Allocating Memory" << endl;
-        exit(1312);
-    }
+    char* help_arr = NULL;
+
+    make_help_arr(&help_arr);
+
     foititis panagiotis(help_arr,"Panagiotis Pantazopoulos");
     panagiotis.print();
     
-    
-    foititis xarhs;
-    xarhs = panagiotis;
-    delete [] help_arr;
-
-    help_arr = new char [size]{'2','2','3','9','0','0','5','2'};    
-    if(!help_arr)
-    {
-        cout << "Error Allocating Memory" << endl;
-        exit(1312);
-    }
-    
-    xarhs.set_foititi_AM(help_arr);
-    delete [] help_arr;
-    xarhs.set_foititi_name("Xarhs Kotsidopoulos");
-    xarhs.set_foititi_semester(2);
+    foititis xarhs(help_arr,"Xarhs Sotiriou",2);
     xarhs.print();
 
+    foititis nefeli = panagiotis;
+    nefeli.print();
+    
+    make_help_arr_3(&help_arr);
+    
+    nefeli.set_foititi_AM(help_arr);
+    delete [] help_arr;
+    nefeli.set_foititi_name("Nefeli Argiropoulou");
+    nefeli.set_foititi_semester(5);
+    nefeli.print();
+
     cout << "End of Exams" << endl;
+    cout<< "-------------" << endl;
     panagiotis++;
     xarhs++;
+    nefeli++;
+
+    cout << "|The tabs of the students after exams|" << endl;
 
     panagiotis.print();
     xarhs.print();
+    nefeli.print();
 
-    cout << "Who wants to change his semester? Panagiotis/Xarhs" << endl;
+    change_semester(panagiotis,xarhs,nefeli);
+    return 0;
+}
+
+void change_semester(foititis panagiotis,foititis xarhs,foititis nefeli)
+{
+    string answer;
+    int s;
+    cout << "Who wants to change his semester? Panagiotis/Xarhs/Nefeli" << endl;
     cin >> answer;
     cout<< "Press 1 for increase" << endl << "Press 2 for decrease" << endl;
     cin >> s;
@@ -93,13 +100,50 @@ int main(void)
         xarhs+=1;
         xarhs.print();
     }
-    else
+    else if (answer == "Xarhs" && s == 2)
     {
         xarhs -=1; 
         xarhs.print();
     }
+    else if(answer == "Nefeli" && s == 1)
+    {
+        nefeli += 1;
+        nefeli.print();
+    }
+    else
+    {
+        nefeli -= 1;
+        nefeli.print();
+    }
 
-    return 0;
+}
+
+void make_help_arr(char **help_arr)
+{
+    if(*help_arr != NULL)
+    {
+        delete [] *help_arr;
+    }
+    *help_arr = new char [25]{'2','2','3','9','0','1','7','4'};
+
+}
+
+void make_help_arr_2(char **help_arr)
+{
+    if(*help_arr != NULL)
+    {
+        delete [] *help_arr;
+    }
+    *help_arr = new char [25]{'2','2','3','9','0','0','5','2'};
+}
+
+void make_help_arr_3(char **help_arr)
+{
+    if(*help_arr != NULL)
+    {
+        delete [] *help_arr;
+    }
+    *help_arr = new char [25]{'2','2','3','9','0','1','3','1'};
 }
 
 foititis::foititis()
@@ -111,27 +155,17 @@ foititis::foititis()
 
 foititis::foititis(char *in_AM,string in_name)
 {
-    AM = new char[size];
-    if(!AM)
-    {
-        cout << "Error Allocating Memory" << endl;
-        exit(1312);
-    }
+    AM = new char[strlen(in_AM) + 1];
     strcpy(AM,in_AM);
     name = in_name;
     semester = 1;    
 }
 
-foititis::foititis(char *in_AM,string name,int in_semester)
+foititis::foititis(char *in_AM,string in_name,int in_semester)
 {
-    AM = new char[strlen(AM)];
-    if(!AM)
-    {
-        cout << "Error Allocating Memory" << endl;
-        exit(1312);
-    }
+    AM = new char[strlen(AM) + 1];
     strcpy(AM,in_AM);
-    name = "Pantazopoulos Panagiotis";
+    name = in_name;
     semester = in_semester;
 }
 
@@ -179,9 +213,9 @@ void foititis::set_foititi_AM(char * in_AM)
 
 void foititis::print()
 {
-    cout << "-------------------------"<<endl;
-    cout << "Name: " << name << endl << "AM: " << AM << endl << "Semester: " << semester << endl;
-    cout << "-------------------------"<<endl;
+    
+    cout << "|Name: " << name <<"|"<< "AM: " << AM <<"|"<< "Semester: " << semester <<"|"<< endl << endl;
+   
 } 
 
 void foititis::change_semester(bool a)
