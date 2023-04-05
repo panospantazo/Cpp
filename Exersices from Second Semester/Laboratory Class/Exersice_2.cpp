@@ -35,7 +35,7 @@ class foititis
 void make_help_arr(char **);
 void make_help_arr_2(char **);
 void make_help_arr_3(char **);
-void change_semester(foititis, foititis , foititis);
+void change_semester(foititis, foititis , foititis , ostream &);
 
 int main(void)
 {
@@ -45,6 +45,8 @@ int main(void)
 
     foititis panagiotis(help_arr,"Panagiotis Pantazopoulos");
     panagiotis.print(cout);
+    
+    make_help_arr_2(&help_arr);
     
     foititis xarhs(help_arr,"Xarhs Sotiriou",2);
     xarhs.print(cout);
@@ -72,17 +74,18 @@ int main(void)
     xarhs.print(cout);
     nefeli.print(cout);
 
-    change_semester(panagiotis,xarhs,nefeli);
+    change_semester(panagiotis,xarhs,nefeli,cout);
+    
     return 0;
 }
 
-void change_semester(foititis panagiotis,foititis xarhs,foititis nefeli)
+void change_semester(foititis panagiotis,foititis xarhs,foititis nefeli,ostream &k)
 {
     string answer;
     int s;
-    cout << "Who wants to change his semester? Panagiotis/Xarhs/Nefeli" << endl;
+    k << "Who wants to change his semester? Panagiotis/Xarhs/Nefeli" << endl;
     cin >> answer;
-    cout<< "Press 1 for increase" << endl << "Press 2 for decrease" << endl;
+    k << "Press 1 for increase" << endl << "Press 2 for decrease" << endl;
     cin >> s;
     
     if(answer == "Panagiotis" && s == 1)
@@ -115,7 +118,6 @@ void change_semester(foititis panagiotis,foititis xarhs,foititis nefeli)
         nefeli -= 1;
         nefeli.print(cout);
     }
-
 }
 
 void make_help_arr(char **help_arr)
@@ -163,7 +165,7 @@ foititis::foititis(char *in_AM,string in_name)
 
 foititis::foititis(char *in_AM,string in_name,int in_semester)
 {
-    AM = new char[strlen(AM) + 1];
+    AM = new char[strlen(in_AM) + 1];
     strcpy(AM,in_AM);
     name = in_name;
     semester = in_semester;
@@ -171,7 +173,9 @@ foititis::foititis(char *in_AM,string in_name,int in_semester)
 
 foititis::foititis(const foititis &in_foit)
 {
-    AM = in_foit.AM;
+    int size = strlen(in_foit.AM + 1);
+    AM = new char [size];
+    strcpy(AM,in_foit.AM);
     name = in_foit.name;
     semester = in_foit.semester;
 }
@@ -211,10 +215,10 @@ void foititis::set_foititi_AM(char * in_AM)
     strcpy(AM,in_AM);
 }
 
-void foititis::print()
+void foititis::print(ostream &k)
 {
     
-    cout << "|Name: " << name <<"|"<< "AM: " << AM <<"|"<< "Semester: " << semester <<"|"<< endl << endl;
+    k << "|Name: " << name <<"|"<< "AM: " << AM <<"|"<< "Semester: " << semester <<"|"<< endl << endl;
    
 } 
 
