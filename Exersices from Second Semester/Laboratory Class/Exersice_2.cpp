@@ -24,7 +24,7 @@ class student
         void change_semester(bool);
         void operator+=(const int);
         void operator-=(const int);
-        void operator++ (const int b);
+        student operator++ (const int b);
 
     private:
         char *AM;
@@ -237,7 +237,7 @@ void student::operator-=(const int right)
     semester = semester - right;
 }
 
-void student::operator++(const int b) 
+student student::operator++(const int b) 
 {
     student tmp = *this;
     semester = semester + 1;
