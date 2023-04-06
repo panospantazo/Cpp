@@ -22,8 +22,8 @@ class student
     
         void print(ostream &);
         void change_semester(bool);
-        void operator+=(const int);
-        void operator-=(const int);
+        student operator+=(const int);
+        student operator-=(const int);
         student operator++ (const int b);
 
     private:
@@ -227,12 +227,13 @@ void student::change_semester(bool a)
     
 }
 
-void student::operator+=(const int right)
+student student::operator+=(const int right)
 {
+    student result;
     semester = semester + right;
 }
 
-void student::operator-=(const int right)
+student student::operator-=(const int right)
 {
     semester = semester - right;
 }
