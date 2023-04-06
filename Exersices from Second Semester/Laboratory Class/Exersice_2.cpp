@@ -175,7 +175,7 @@ student::student(const student &in_student)
 {
     int size = strlen(in_student.AM + 1);
     AM = new char [size];
-    strcpy(AM,in_student.AM);
+    memcpy(AM,in_student.AM,size);
     name = in_student.name;
     semester = in_student.semester;
 }
