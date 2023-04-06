@@ -172,12 +172,8 @@ student::student(char *in_AM,string in_name,int in_semester)
 }
 
 student::student(const student &in_student)
-{
-    int size = strlen(in_student.AM + 1);
-    AM = new char [size];
-    memcpy(AM,in_student.AM,size);
-    name = in_student.name;
-    semester = in_student.semester;
+{
+    memcpy(this,&in_student,sizeof(student));
 }
 
 unsigned int student::get_student_semester()
