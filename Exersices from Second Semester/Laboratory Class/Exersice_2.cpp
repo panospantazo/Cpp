@@ -239,5 +239,7 @@ void student::operator-=(const int right)
 
 void student::operator++(const int b) 
 {
+    student tmp = *this;
     semester = semester + 1;
+    return tmp;
 }
