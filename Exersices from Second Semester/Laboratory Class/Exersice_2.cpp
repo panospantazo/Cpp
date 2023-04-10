@@ -101,27 +101,22 @@ void change_semester(student &panagiotis,student &xarhs,student &nefeli,ostream 
     if(answer == "Panagiotis" && s == 1)
     {
         panagiotis+=1;
-        
     }
     else if(answer == "Panagiotis" && s == 2)
     {
-        panagiotis-=1;
-        
+        panagiotis-=1;  
     }
     else if(answer == "Xarhs" && s == 1)
     {
-        xarhs+=1;
-        
+        xarhs+=1;        
     }
     else if (answer == "Xarhs" && s == 2)
     {
         xarhs -=1; 
-       
     }
     else if(answer == "Nefeli" && s == 1)
     {
-        nefeli += 1;
-        
+        nefeli += 1;        
     }
     else
     {
