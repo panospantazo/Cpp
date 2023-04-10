@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstring>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 class student
@@ -22,9 +24,9 @@ class student
     
         void print(ostream &);
         void change_semester(bool);
-        student operator+=(const int);
-        student operator-=(const int);
-        student operator++ (const int b);
+        void operator+=(const int);
+        void operator-=(const int);
+        void operator++ (const int b);
 
     private:
         char *AM;
@@ -33,12 +35,16 @@ class student
 };
 
 void make_help_arr(char **);
+void delete_help_arr(char **);
 void make_help_arr_2(char **);
 void make_help_arr_3(char **);
-void change_semester(student, student, student , ostream &);
+void change_semester(student &,student &, student &, ostream &);
 
 int main(void)
 {
+
+    srand(time(NULL));
+
     char* help_arr = NULL;
 
     make_help_arr(&help_arr);
@@ -46,7 +52,7 @@ int main(void)
     student panagiotis(help_arr,"Panagiotis Pantazopoulos");
     panagiotis.print(cout);
     
-    make_help_arr_2(&help_arr);
+    make_help_arr(&help_arr);
     
     student xarhs(help_arr,"Xarhs Sotiriou",2);
     xarhs.print(cout);
@@ -54,10 +60,10 @@ int main(void)
     student nefeli = panagiotis;
     nefeli.print(cout);
     
-    make_help_arr_3(&help_arr);
+    make_help_arr(&help_arr);
     
     nefeli.set_student_AM(help_arr);
-    delete [] help_arr;
+    delete_help_arr(&help_arr);
     nefeli.set_student_name("Nefeli Argiropoulou");
     nefeli.set_student_semester(5);
     nefeli.print(cout);
@@ -75,11 +81,15 @@ int main(void)
     nefeli.print(cout);
 
     change_semester(panagiotis,xarhs,nefeli,cout);
+
+    panagiotis.print(cout);
+    xarhs.print(cout);
+    nefeli.print(cout);
     
     return 0;
 }
 
-void change_semester(student panagiotis,student xarhs,student nefeli,ostream &k)
+void change_semester(student &panagiotis,student &xarhs,student &nefeli,ostream &k)
 {
     string answer;
     int s;
@@ -91,33 +101,37 @@ void change_semester(student panagiotis,student xarhs,student nefeli,ostream &k)
     if(answer == "Panagiotis" && s == 1)
     {
         panagiotis+=1;
-        panagiotis.print(cout);
+        
     }
     else if(answer == "Panagiotis" && s == 2)
     {
         panagiotis-=1;
-        panagiotis.print(cout);
+        
     }
     else if(answer == "Xarhs" && s == 1)
     {
         xarhs+=1;
-        xarhs.print(cout);
+        
     }
     else if (answer == "Xarhs" && s == 2)
     {
         xarhs -=1; 
-        xarhs.print(cout);
+       
     }
     else if(answer == "Nefeli" && s == 1)
     {
         nefeli += 1;
-        nefeli.print(cout);
+        
     }
     else
     {
         nefeli -= 1;
-        nefeli.print(cout);
     }
+}
+
+void delete_help_arr(char **help_arr)
+{
+    delete [] *help_arr;
 }
 
 void make_help_arr(char **help_arr)
@@ -126,8 +140,7 @@ void make_help_arr(char **help_arr)
     {
         delete [] *help_arr;
     }
-    *help_arr = new char [25]{'2','2','3','9','0','1','7','4'};
-
+    *help_arr = new char [25]{'2','2','3','9','0','1','7','4','\0'}; 
 }
 
 void make_help_arr_2(char **help_arr)
@@ -172,8 +185,11 @@ student::student(char *in_AM,string in_name,int in_semester)
 }
 
 student::student(const student &in_student)
-{
-    memcpy(this,&in_student,sizeof(student));
+{
+    AM = new char [strlen(in_student.AM + 1)];
+    strcpy(AM,in_student.AM);
+    name = in_student.name;
+    semester = in_student.semester;
 }
 
 unsigned int student::get_student_semester()
@@ -208,6 +224,17 @@ void student::set_student_name(string in_name)
 
 void student::set_student_AM(char * in_AM)
 {
+    if(AM != NULL)
+    {
+        delete [] AM;
+    }
+
+    AM = new char [strlen(in_AM) + 1];
+    if(!AM)
+    {
+        cout << "Error Allocating Memory" << endl;
+        exit(1312);
+    }
     strcpy(AM,in_AM);
 }
 
@@ -227,18 +254,17 @@ void student::change_semester(bool a)
     
 }
 
-student student::operator+=(const int right)
+void student::operator+=(const int right)
 {
-    student result;
     semester = semester + right;
 }
 
-student student::operator-=(const int right)
+void student::operator-=(const int right)
 {
     semester = semester - right;
 }
 
-student student::operator++(const int b) 
+void student::operator++(const int b) 
 {
     student tmp = *this;
     semester = semester + 1;
