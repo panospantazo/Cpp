@@ -1,13 +1,11 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-#include <ctime>
 using namespace std;
 
 class student
 {
     public:
-        student();
         student(char*,string);
         student(char*,string,int);
         student(const student &);
@@ -23,10 +21,12 @@ class student
         void set_student_AM(char *);
     
         void print(ostream &);
+
         void change_semester(bool);
-        void operator+=(const int);
-        void operator-=(const int);
-        void operator++ (const int b);
+
+        student operator+=(const int);
+        student operator-=(const int);
+        void operator++ (const int);
 
     private:
         char *AM;
@@ -34,25 +34,26 @@ class student
         unsigned int semester;
 };
 
-void make_help_arr(char **);
 void delete_help_arr(char **);
-void make_help_arr_2(char **);
-void make_help_arr_3(char **);
-void change_semester(student &,student &, student &, ostream &);
+void make_help_arr(char *&, const char *);
+void increase_semester(student &,student &, student &);
+void decrease_semester(student &,student &, student &);
+void semester_after_exams(student &,student &,student &);
 
 int main(void)
 {
+    system("chcp 1253"); 
 
-    srand(time(NULL));
+    //Creating students with Constructor,Copy Constructor and setters
 
     char* help_arr = NULL;
 
-    make_help_arr(&help_arr);
+    make_help_arr(help_arr,"22390174");
 
     student panagiotis(help_arr,"Panagiotis Pantazopoulos");
     panagiotis.print(cout);
     
-    make_help_arr(&help_arr);
+    make_help_arr(help_arr,"22390052");
     
     student xarhs(help_arr,"Xarhs Sotiriou",2);
     xarhs.print(cout);
@@ -60,7 +61,7 @@ int main(void)
     student nefeli = panagiotis;
     nefeli.print(cout);
     
-    make_help_arr(&help_arr);
+    make_help_arr(help_arr,"22390131");
     
     nefeli.set_student_AM(help_arr);
     delete_help_arr(&help_arr);
@@ -68,19 +69,35 @@ int main(void)
     nefeli.set_student_semester(5);
     nefeli.print(cout);
 
+    //Increasing semester with ++
+
     cout << "End of Exams" << endl;
     cout<< "-------------" << endl;
-    panagiotis++;
-    xarhs++;
-    nefeli++;
+    
+    semester_after_exams(panagiotis,xarhs,nefeli);
 
     cout << "|The tabs of the students after exams|" << endl;
+    cout << "--------------------------------------" << endl;
 
     panagiotis.print(cout);
     xarhs.print(cout);
     nefeli.print(cout);
 
-    change_semester(panagiotis,xarhs,nefeli,cout);
+    // Increasing semester with +=
+
+    cout << "Increasing Semester..." << endl;
+    cout << "----------------------" << endl;
+    increase_semester(panagiotis,xarhs,nefeli);
+
+    panagiotis.print(cout);
+    xarhs.print(cout);
+    nefeli.print(cout);
+
+    //Decreasing semester with -=
+
+    cout << "Decreasing Semester..." << endl;
+    cout << "----------------------" << endl;
+    decrease_semester(panagiotis,xarhs,nefeli);
 
     panagiotis.print(cout);
     xarhs.print(cout);
@@ -89,79 +106,50 @@ int main(void)
     return 0;
 }
 
-void change_semester(student &panagiotis,student &xarhs,student &nefeli,ostream &k)
+//Increasing semester function (+=)
+
+void increase_semester(student &panagiotis,student &xarhs, student &nefeli)
 {
-    string answer;
-    int s;
-    k << "Who wants to change his semester? Panagiotis/Xarhs/Nefeli" << endl;
-    cin >> answer;
-    k << "Press 1 for increase" << endl << "Press 2 for decrease" << endl;
-    cin >> s;
-    
-    if(answer == "Panagiotis" && s == 1)
-    {
-        panagiotis+=1;
-    }
-    else if(answer == "Panagiotis" && s == 2)
-    {
-        panagiotis-=1;  
-    }
-    else if(answer == "Xarhs" && s == 1)
-    {
-        xarhs+=1;        
-    }
-    else if (answer == "Xarhs" && s == 2)
-    {
-        xarhs -=1; 
-    }
-    else if(answer == "Nefeli" && s == 1)
-    {
-        nefeli += 1;        
-    }
-    else
-    {
-        nefeli -= 1;
-    }
+    panagiotis += 1;
+    xarhs += 1;
+    nefeli += 1;
 }
+
+//Decreasing semester function (-=)
+
+void decrease_semester(student &panagiotis,student &xarhs, student &nefeli)
+{
+    panagiotis -= 1;
+    xarhs -= 1;
+    nefeli -= 1;
+}
+
+//Increasing semester function (++)
+
+void semester_after_exams(student &panagiotis,student &xarhs,student &nefeli)
+{
+    panagiotis++;
+    xarhs++;
+    nefeli++;
+}
+
+//Deleting help array
 
 void delete_help_arr(char **help_arr)
 {
     delete [] *help_arr;
 }
 
-void make_help_arr(char **help_arr)
+//Proccesing helping array
+
+void make_help_arr(char *&help_arr,const char *AM)
 {
-    if(*help_arr != NULL)
-    {
-        delete [] *help_arr;
-    }
-    *help_arr = new char [25]{'2','2','3','9','0','1','7','4','\0'}; 
+  int len = strlen(AM);
+  help_arr = new char [len + 1];
+  strcpy (help_arr, AM);
 }
 
-void make_help_arr_2(char **help_arr)
-{
-    if(*help_arr != NULL)
-    {
-        delete [] *help_arr;
-    }
-    *help_arr = new char [25]{'2','2','3','9','0','0','5','2'};
-}
-
-void make_help_arr_3(char **help_arr)
-{
-    if(*help_arr != NULL)
-    {
-        delete [] *help_arr;
-    }
-    *help_arr = new char [25]{'2','2','3','9','0','1','3','1'};
-}
-
-student::student()
-{
-    AM = NULL;
-    semester = 0;
-    name = "";
-}
+//Constructor with AM and Name as parametres
 
 student::student(char *in_AM,string in_name)
 {
@@ -171,6 +159,8 @@ student::student(char *in_AM,string in_name)
     semester = 1;    
 }
 
+//Constructor with AM,Name and semester as parametres
+
 student::student(char *in_AM,string in_name,int in_semester)
 {
     AM = new char[strlen(in_AM) + 1];
@@ -178,6 +168,8 @@ student::student(char *in_AM,string in_name,int in_semester)
     name = in_name;
     semester = in_semester;
 }
+
+//Copy Constructor
 
 student::student(const student &in_student)
 {
@@ -187,35 +179,49 @@ student::student(const student &in_student)
     semester = in_student.semester;
 }
 
+//Semester getter
+
 unsigned int student::get_student_semester()
 {
     return semester;
 }
+
+//Name getter
 
 string student::get_student_name()
 {
     return name;
 }
 
+//AM getter
+
 char* student::get_student_AM()
 {
     return AM;
 }
+
+//Destructor
 
 student::~student()
 {
     delete [] AM;
 }
 
+//Setter of student's semester
+
 void student::set_student_semester(int in_semester)
 {
     semester = in_semester;
 }
 
+//Setter of student's name
+
 void student::set_student_name(string in_name)
 {
     name = in_name;
 }
+
+//Setter of AM
 
 void student::set_student_AM(char * in_AM)
 {
@@ -240,28 +246,25 @@ void student::print(ostream &k)
    
 } 
 
-void student::change_semester(bool a)
-{
-    if(a == true)
-        semester += 1;
-    else
-        semester -= 1;
-    
-}
+//Overloading +=
 
-void student::operator+=(const int right)
+student student::operator+=(const int right)
 {
     semester = semester + right;
+    return *this;
 }
 
-void student::operator-=(const int right)
+//Overloading -=
+
+student student::operator-=(const int right)
 {
     semester = semester - right;
+    return *this;
 }
+
+//Overloading ++
 
 void student::operator++(const int b) 
 {
-    student tmp = *this;
     semester = semester + 1;
-    return tmp;
 }
