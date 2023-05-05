@@ -22,6 +22,8 @@ class student
     
         void print(ostream &);
 
+        void change_semester(bool);
+
         student operator+=(const int);
         student operator-=(const int);
         void operator++ (const int);
@@ -39,20 +41,19 @@ void decrease_semester(student &,student &, student &);
 void semester_after_exams(student &,student &,student &);
 
 int main(void)
-{    
+{ 
+
     //Creating students with Constructor,Copy Constructor and setters
 
     char* help_arr = NULL;
-    
-    
-    cout << endl << "Creating Students" << endl;
-    cout << "-----------------------" << endl;
+
+    cout << "Creating Students" << endl;
+    cout << "----------------" << endl;
 
     make_help_arr(help_arr,"22390174");
 
-    student panagiotis(help_arr,"Pantazopoulos Panagiotis");
-    
-	panagiotis.print(cout);
+    student panagiotis(help_arr,"Panagiotis Pantazopoulos");
+    panagiotis.print(cout);
     
     make_help_arr(help_arr,"22390052");
     
@@ -77,8 +78,8 @@ int main(void)
     
     semester_after_exams(panagiotis,xarhs,nefeli);
 
-    cout << "|Tabs of Students|" << endl;
-    cout << "------------------" << endl;
+    cout << "|The tabs of the students after exams|" << endl;
+    cout << "--------------------------------------" << endl;
 
     panagiotis.print(cout);
     xarhs.print(cout);
@@ -242,7 +243,9 @@ void student::set_student_AM(char * in_AM)
 
 void student::print(ostream &k)
 {
+    
     k << "|Name: " << name <<"|"<< "AM: " << AM <<"|"<< "Semester: " << semester <<"|"<< endl << endl;
+   
 } 
 
 //Overloading +=
